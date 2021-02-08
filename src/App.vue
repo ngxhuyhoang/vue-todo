@@ -12,6 +12,7 @@
     :isCompleted="todo.isCompleted"
     @click="markAsCompleted(index)"
   />
+  <h3 v-show="!todos.length">Hôm nay chưa có việc gì làm</h3>
 </template>
 
 <script>
@@ -25,20 +26,8 @@ export default {
   data() {
     return {
       newTask: "",
-      todos: [
-        {
-          content: "Đi chợ",
-          isCompleted: false,
-        },
-        {
-          content: "Đi mua quất",
-          isCompleted: false,
-        },
-        {
-          content: "Đi xem pháo hoa",
-          isCompleted: false,
-        },
-      ],
+      todos: [],
+      isShowTodoList: false,
     };
   },
   methods: {
