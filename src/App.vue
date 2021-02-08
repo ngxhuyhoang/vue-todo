@@ -1,26 +1,77 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <img alt="Vue logo" src="./assets/logo.png" />
+  <h1>Todo App</h1>
+  <div style="add-todo">
+    <input placeholder="Type here..." type="text" v-model="newTask" />
+    <button @click="addTodo(newTask)">Thêm</button>
+  </div>
+  <TodoItem
+    v-for="(todo, index) in todos"
+    :key="index"
+    :content="todo.content"
+    :isCompleted="todo.isCompleted"
+    @click="markAsCompleted(index)"
+  />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TodoItem from "./components/TodoItem.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    TodoItem,
+  },
+  data() {
+    return {
+      newTask: "",
+      todos: [
+        {
+          content: "Đi chợ",
+          isCompleted: false,
+        },
+        {
+          content: "Đi mua quất",
+          isCompleted: false,
+        },
+        {
+          content: "Đi xem pháo hoa",
+          isCompleted: false,
+        },
+      ],
+    };
+  },
+  methods: {
+    markAsCompleted(index) {
+      this.todos[index].isCompleted = !this.todos[index].isCompleted;
+    },
+    addTodo(content) {
+      this.todos.unshift({ content, isCompleted: false });
+      this.newTask = "";
+    },
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+button {
+  padding: 8px;
+  cursor: pointer;
+  background: green;
+  color: #fff;
+  border-radius: 5px;
+  outline: none;
+}
+
+input {
+  margin: 0px 16px;
+  padding: 8px 16px;
+  outline-color: green;
+  border-radius: 5px;
+}
+
+.add-todo {
+  display: flex;
+  flex-direction: row;
 }
 </style>
